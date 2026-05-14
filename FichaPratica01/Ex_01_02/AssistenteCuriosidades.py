@@ -1,7 +1,12 @@
 from BibliotecaCuriosidades import *
+from math import *
 
 
 while True:
+    
+    numero = int(input("Coloca um numero: "))
+    raiz = sqrt(numero)
+
     print("\n\n***** Assistente de Curiosidades *****")
     print("1. Maior de Idade")
     print("2. Fase da Vida")

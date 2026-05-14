@@ -21,9 +21,10 @@ def fase_vida(idade):
     
 
 def capital_pais(pais):
-
+  
     if pais == "Portugal":
         return "Lisboa"
+
     elif pais == "Espanha":
         return "Madrid"
     elif pais == "França":
@@ -34,4 +35,3 @@ def capital_pais(pais):
         return "Berlim"
     else:
         return "País não encontrado"
-    
