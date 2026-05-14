@@ -16,7 +16,6 @@ while True:
 
     if opcao==1 :
         print("\n** Maior de Idade **")
-        maior_de_idade(10)
     
     elif opcao==2 :
         print("\n** Fase da Vida **")

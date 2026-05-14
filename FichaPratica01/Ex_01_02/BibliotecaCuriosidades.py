@@ -1,4 +1,4 @@
-def maior_de_idade(idade:int):
+def maior_de_idade(idade):
 
     if idade >= 18:
         return True
@@ -6,7 +6,7 @@ def maior_de_idade(idade:int):
         return False
 
 
-def fase_vida(idade:int):
+def fase_vida(idade):
 
     if idade >=64:
         return "Idoso"
