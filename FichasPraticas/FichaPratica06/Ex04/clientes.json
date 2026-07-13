@@ -1,0 +1,58 @@
+[
+    {
+        "Nome": "Ana Silva",
+        "Email": "ana.silva@email.com",
+        "Idade": 25,
+        "Cidade": "Porto",
+        "Cliente_Ativo": true
+    },
+    {
+        "Nome": "Bruno Costa",
+        "Email": "bruno.costa@email.com",
+        "Idade": 34,
+        "Cidade": "Braga",
+        "Cliente_Ativo": true
+    },
+    {
+        "Nome": "Carla Mendes",
+        "Email": "carla.mendes@email.com",
+        "Idade": 19,
+        "Cidade": "Lisboa",
+        "Cliente_Ativo": false
+    },
+    {
+        "Nome": "Diogo Santos",
+        "Email": "diogo.santos@email.com",
+        "Idade": 42,
+        "Cidade": "Porto",
+        "Cliente_Ativo": true
+    },
+    {
+        "Nome": "Eva Martins",
+        "Email": "eva.martins@email.com",
+        "Idade": 31,
+        "Cidade": "Coimbra",
+        "Cliente_Ativo": false
+    },
+    {
+        "Nome": "Fábio Rocha",
+        "Email": "fabio.rocha@email.com",
+        "Idade": 28,
+        "Cidade": "Braga",
+        "Cliente_Ativo": true
+    },
+    {
+        "Nome": "Gabriela Pinto",
+        "Email": "gabriela.pinto@email.com",
+        "Idade": 55,
+        "Cidade": "Lisboa",
+        "Cliente_Ativo": true
+    },
+    {
+        "Nome": "Hugo Lima",
+        "Email": "hugo.lima@email.com",
+        "Idade": 63,
+        "Cidade": "Porto",
+        "Cliente_Ativo": false
+    }
+]

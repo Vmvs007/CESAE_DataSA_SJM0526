@@ -1,29 +1,35 @@
 import numpy as np
 
+
 temperaturas = np.array([
-    18.5, 20.0, 21.3, 19.8, 22.1, 23.0, 24.5, 25.2, 24.8, 23.5, 22.0, 21.7, 20.9, 19.5
+    18.5, 20.0, 21.3, 19.8, 22.1, 23.0, 24.5,
+    25.2, 24.8, 23.5, 22.0, 21.7, 20.9, 19.5,
 ])
 
+print("Temperaturas:")
+print(temperaturas)
 print(f"Shape: {temperaturas.shape}")
-print(f"Data Type: {temperaturas.dtype}")
+print(f"Tipo de dados: {temperaturas.dtype}")
 
-print(f"\nTemp. Média: {np.mean(temperaturas)}")
-print(f"Temp. Min: {np.min(temperaturas)}")
-print(f"Temp. Max: {np.max(temperaturas)}")
-print(f"Amplitude: {np.max(temperaturas) - np.min(temperaturas)}")
-print(f"Desvio Padrão: {np.std(temperaturas)}")
+media = np.mean(temperaturas)
+minimo = np.min(temperaturas)
+maximo = np.max(temperaturas)
+amplitude = maximo - minimo
+desvio_padrao = np.std(temperaturas)
 
-diasAcimaMedia = np.where(temperaturas > np.mean(temperaturas))
+print(f"Temperatura media: {media:.2f}")
+print(f"Temperatura minima: {minimo:.2f}")
+print(f"Temperatura maxima: {maximo:.2f}")
+print(f"Amplitude termica: {amplitude:.2f}")
+print(f"Desvio-padrao: {desvio_padrao:.2f}")
 
-print(f"\nIndex dias acima da média: {diasAcimaMedia[0]}")
-print(f"Temperaturas dos dias acima da média {temperaturas[diasAcimaMedia[0]]}")
+dias_superiores_media = np.where(temperaturas > media)[0]
+dias_superiores_22 = temperaturas > 22
 
-diasAcima22C = temperaturas > 22
-quantidadeDiasAcima22C = sum(diasAcima22C)
-print(f"\nDias acima de 22ºC: {quantidadeDiasAcima22C}")
+print(f"Dias com temperatura superior a media: {dias_superiores_media + 1}")
+print(f"Temperaturas superiores a media: {temperaturas[dias_superiores_media]}")
+print(f"Dias com temperatura superior a 22 graus: {np.sum(dias_superiores_22)}")
+print(f"Percentagem acima de 22 graus: {np.mean(dias_superiores_22) * 100:.2f}%")
 
-# diasAcima22C = np.where(temperaturas > 22)
-# print(len(diasAcima22C[0]))
-
-percentagemDiasAcima22C = quantidadeDiasAcima22C / len(temperaturas) * 100
-print(f"Percentagem dias acima de 22ºC: {percentagemDiasAcima22C}%")
+print("\nInterpretacao:")
+print("A variacao e moderada: existe subida ate meio do periodo e depois uma descida gradual.")

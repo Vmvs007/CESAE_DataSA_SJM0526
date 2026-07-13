@@ -1,0 +1,66 @@
+[
+    {
+        "Encomenda_ID": 1001,
+        "Cliente": "Ana Silva",
+        "Produto": "Caderno A4",
+        "Categoria": "Papelaria",
+        "Valor": 25.00,
+        "Estado": "Concluída"
+    },
+    {
+        "Encomenda_ID": 1002,
+        "Cliente": "Bruno Costa",
+        "Produto": "Mochila Escolar",
+        "Categoria": "Acessórios",
+        "Valor": 74.70,
+        "Estado": "Concluída"
+    },
+    {
+        "Encomenda_ID": 1003,
+        "Cliente": "Carla Mendes",
+        "Produto": "Pen USB 64GB",
+        "Categoria": "Tecnologia",
+        "Valor": 69.93,
+        "Estado": "Pendente"
+    },
+    {
+        "Encomenda_ID": 1004,
+        "Cliente": "Diogo Santos",
+        "Produto": "Agenda 2026",
+        "Categoria": "Papelaria",
+        "Valor": 37.50,
+        "Estado": "Cancelada"
+    },
+    {
+        "Encomenda_ID": 1005,
+        "Cliente": "Eva Martins",
+        "Produto": "Powerbank",
+        "Categoria": "Tecnologia",
+        "Valor": 67.50,
+        "Estado": "Concluída"
+    },
+    {
+        "Encomenda_ID": 1006,
+        "Cliente": "Fábio Rocha",
+        "Produto": "Estojo",
+        "Categoria": "Acessórios",
+        "Valor": 40.50,
+        "Estado": "Concluída"
+    },
+    {
+        "Encomenda_ID": 1007,
+        "Cliente": "Gabriela Pinto",
+        "Produto": "Auriculares",
+        "Categoria": "Tecnologia",
+        "Valor": 29.80,
+        "Estado": "Pendente"
+    },
+    {
+        "Encomenda_ID": 1008,
+        "Cliente": "Hugo Lima",
+        "Produto": "Marcadores",
+        "Categoria": "Papelaria",
+        "Valor": 33.60,
+        "Estado": "Concluída"
+    }
+]

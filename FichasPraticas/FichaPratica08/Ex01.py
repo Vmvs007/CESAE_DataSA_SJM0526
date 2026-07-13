@@ -1,128 +1,117 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.model_selection import train_test_split
 
-dados_ruido = {
-    "Zona": [
-        "Centro", "Centro", "Centro", "Centro",
-        "Parque", "Parque", "Parque", "Parque",
-        "Industrial", "Industrial", "Industrial", "Industrial",
-        "Residencial", "Residencial", "Residencial", "Residencial",
-        "Ribeira", "Ribeira", "Ribeira", "Ribeira"
-    ],
-    "Periodo": [
-        "Manhã", "Tarde", "Noite", "Madrugada",
-        "Manhã", "Tarde", "Noite", "Madrugada",
-        "Manhã", "Tarde", "Noite", "Madrugada",
-        "Manhã", "Tarde", "Noite", "Madrugada",
-        "Manhã", "Tarde", "Noite", "Madrugada"
-    ],
-    "Dia_Tipo": [
-        "Útil", "Útil", "Útil", "Fim de semana",
-        "Útil", "Útil", "Fim de semana", "Fim de semana",
-        "Útil", "Útil", "Útil", "Fim de semana",
-        "Útil", "Útil", "Fim de semana", "Fim de semana",
-        "Útil", "Útil", "Fim de semana", "Fim de semana"
-    ],
-    "Nivel_Ruido_dB": [
-        68, 72, 76, 61,
-        48, 52, 55, 43,
-        74, 79, 70, 58,
-        55, 59, 62, 47,
-        63, 69, 81, 66
-    ],
-    "Numero_Pessoas": [
-        320, 450, 520, 120,
-        80, 130, 160, 30,
-        210, 260, 170, 60,
-        150, 190, 220, 50,
-        280, 390, 610, 230
-    ],
-    "Temperatura": [
-        18, 23, 20, 15,
-        17, 22, 19, 14,
-        19, 25, 21, 16,
-        18, 24, 20, 15,
-        18, 23, 21, 16
-    ]
+
+dados = {
+    "Km_Percorridos": [120, 340, 560, 230, 780, 150, 910, 430, 670, 290, 1020, 510, 860, 190, 720, 390, 1150, 610, 310, 940, 480, 800, 260, 1080, 370, 690, 130, 990, 540, 750],
+    "Numero_Viagens": [35, 90, 140, 60, 190, 42, 230, 115, 170, 75, 260, 130, 215, 50, 185, 100, 300, 155, 82, 240, 125, 200, 68, 280, 96, 175, 38, 255, 138, 195],
+    "Travagens_Bruscas": [8, 22, 35, 14, 48, 10, 60, 28, 42, 18, 70, 33, 55, 12, 46, 25, 82, 39, 20, 64, 31, 50, 16, 76, 24, 44, 9, 68, 34, 49],
+    "Dias_Desde_Manutencao": [12, 35, 58, 20, 75, 15, 90, 42, 63, 28, 100, 50, 82, 18, 70, 38, 115, 60, 30, 95, 46, 78, 25, 108, 36, 66, 14, 98, 52, 72],
+    "Utilizacao_Chuva": [2, 7, 12, 4, 16, 3, 20, 8, 14, 5, 22, 10, 18, 3, 15, 7, 25, 13, 6, 21, 9, 17, 4, 24, 7, 14, 2, 23, 11, 16],
+    "Desgaste_Percentagem": [9, 24, 39, 16, 55, 11, 68, 31, 47, 20, 76, 36, 62, 14, 52, 28, 88, 43, 22, 70, 34, 58, 18, 82, 27, 49, 10, 74, 38, 54],
 }
 
-df_ruido = pd.DataFrame(dados_ruido)
+df_trotinetes = pd.DataFrame(dados)
 
-print("Primeiras linhas do DataFrame:")
-print(df_ruido.head())
+print("Primeiras 5 linhas:")
+print(df_trotinetes.head())
+print("\nInfo:")
+df_trotinetes.info()
+print("\nEstatisticas descritivas:")
+print(df_trotinetes.describe())
+print("\nValores em falta:")
+print(df_trotinetes.isnull().sum())
+print("\nResumo do desgaste:")
+print(df_trotinetes["Desgaste_Percentagem"].agg(["min", "max", "mean"]))
 
-print("\nEstatísticas descritivas:")
-print(df_ruido.describe())
+media_desgaste = df_trotinetes["Desgaste_Percentagem"].mean()
+maior_desgaste = df_trotinetes.loc[df_trotinetes["Desgaste_Percentagem"].idxmax()]
+menor_desgaste = df_trotinetes.loc[df_trotinetes["Desgaste_Percentagem"].idxmin()]
+correlacoes = df_trotinetes.corr(numeric_only=True)
+relacao_desgaste = correlacoes["Desgaste_Percentagem"].drop("Desgaste_Percentagem").sort_values(key=abs, ascending=False)
 
-media_zona = df_ruido.groupby("Zona")["Nivel_Ruido_dB"].mean().sort_values(ascending=False)
+print(f"Media de desgaste: {media_desgaste:.2f}%")
+print("\nTrotinete com maior desgaste:")
+print(maior_desgaste)
+print("\nTrotinete com menor desgaste:")
+print(menor_desgaste)
+print("\nCorrelacoes:")
+print(correlacoes)
+print("\nVariaveis mais relacionadas com o desgaste:")
+print(relacao_desgaste)
 
-print("\nNível médio de ruído por zona:")
-print(media_zona)
+for coluna in ["Km_Percorridos", "Travagens_Bruscas", "Dias_Desde_Manutencao"]:
+    plt.figure(figsize=(7, 4))
+    plt.scatter(df_trotinetes[coluna], df_trotinetes["Desgaste_Percentagem"])
+    plt.xlabel(coluna)
+    plt.ylabel("Desgaste (%)")
+    plt.title(f"Relacao entre {coluna} e desgaste")
+    plt.tight_layout()
+    plt.show()
 
-plt.figure(figsize=(8, 5))
-media_zona.plot(kind="barh")
-plt.title("Nível médio de ruído por zona")
-plt.xlabel("Nível médio de ruído (dB)")
-plt.ylabel("Zona")
-plt.gca().invert_yaxis()
-plt.show()
+print("\nInterpretacao dos graficos:")
+print("Os graficos mostram relacao positiva entre utilizacao, travagens, tempo desde manutencao e desgaste.")
 
-media_periodo = df_ruido.groupby("Periodo")["Nivel_Ruido_dB"].mean().sort_values(ascending=False)
+X = df_trotinetes[[
+    "Km_Percorridos",
+    "Numero_Viagens",
+    "Travagens_Bruscas",
+    "Dias_Desde_Manutencao",
+    "Utilizacao_Chuva",
+]]
+y = df_trotinetes["Desgaste_Percentagem"]
 
-print("\nNível médio de ruído por período:")
-print(media_periodo)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-plt.figure(figsize=(8, 5))
-media_periodo.plot(kind="bar")
-plt.title("Nível médio de ruído por período do dia")
-plt.xlabel("Período")
-plt.ylabel("Nível médio de ruído (dB)")
-plt.xticks(rotation=0)
-plt.show()
+print("\nTamanhos dos conjuntos:")
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
 
-plt.figure(figsize=(8, 5))
-sns.scatterplot(
-    data=df_ruido,
-    x="Numero_Pessoas",
-    y="Nivel_Ruido_dB",
-    hue="Zona"
-)
-plt.title("Relação entre número de pessoas e nível de ruído")
-plt.xlabel("Número de pessoas")
-plt.ylabel("Nível de ruído (dB)")
-plt.show()
+modelo = LinearRegression()
+modelo.fit(X_train, y_train)
 
-correlacao = df_ruido["Numero_Pessoas"].corr(df_ruido["Nivel_Ruido_dB"])
+coeficientes = pd.DataFrame({
+    "Variavel": X.columns,
+    "Coeficiente": modelo.coef_,
+})
 
-print("\nCorrelação entre número de pessoas e nível de ruído:")
-print(correlacao)
+print("\nCoeficientes:")
+print(coeficientes)
+print(f"Intercepto: {modelo.intercept_:.2f}")
 
-tabela_dinamica = pd.pivot_table(
-    df_ruido,
-    values="Nivel_Ruido_dB",
-    index="Zona",
-    columns="Periodo",
-    aggfunc="mean"
-)
+previsoes = modelo.predict(X_test)
+resultado = pd.DataFrame({
+    "Valor_Real": y_test.values,
+    "Valor_Previsto": previsoes,
+})
+resultado["Erro_Absoluto"] = abs(resultado["Valor_Real"] - resultado["Valor_Previsto"])
 
-print("\nTabela dinâmica - média de ruído por zona e período:")
-print(tabela_dinamica)
+print("\nComparacao entre valores reais e previstos:")
+print(resultado.sort_values("Erro_Absoluto", ascending=False))
 
-print("\nConclusão:")
-print("""
-A zona mais ruidosa é a zona Industrial, com uma média de 70.25 dB,
-seguida da Ribeira e do Centro.
+mae = mean_absolute_error(y_test, previsoes)
+r2 = r2_score(y_test, previsoes)
 
-O período mais crítico é a Noite, com uma média de 68.8 dB,
-sendo o período com maior exposição sonora média.
+print(f"MAE: {mae:.2f}")
+print(f"R2: {r2:.2f}")
 
-A correlação entre o número de pessoas e o nível de ruído é aproximadamente 0.81,
-o que indica uma relação positiva forte. Isto significa que, em geral,
-quanto maior é a concentração de pessoas, maior tende a ser o nível de ruído.
+nova_trotinete = pd.DataFrame({
+    "Km_Percorridos": [850],
+    "Numero_Viagens": [210],
+    "Travagens_Bruscas": [52],
+    "Dias_Desde_Manutencao": [80],
+    "Utilizacao_Chuva": [18],
+})
 
-Como recomendação, a autarquia poderia reforçar a monitorização nas zonas Industrial,
-Ribeira e Centro, especialmente durante a noite, aplicando medidas como controlo
-de tráfego, limitação de atividades ruidosas em determinados horários e criação
-de zonas de redução sonora.
-""")
+desgaste_previsto = modelo.predict(nova_trotinete)
+print(f"Desgaste previsto para a nova trotinete: {desgaste_previsto[0]:.2f}%")
+
+print("\nConclusao final:")
+print("As variaveis de utilizacao acumulada apresentam forte relacao com o desgaste.")
+print("Com MAE baixo e R2 elevado, a regressao linear consegue apoiar manutencao preventiva.")
+print("Antes de usar em ambiente real, seria necessario validar o modelo com mais dados.")

@@ -1,53 +1,29 @@
 import statistics as st
 
-from docutils.parsers.rst.directives import percentage
 
 notas = [8, 12, 15, 17, 9, 14, 18, 11, 13, 16, 7, 19, 10, 14, 15, 12, 14, 11, 15, 14, 14]
 
 media = st.mean(notas)
 mediana = st.median(notas)
-maiorNota = max(notas)
-menorNota = min(notas)
-amplitude = maiorNota - menorNota
+maior_nota = max(notas)
+menor_nota = min(notas)
+amplitude = maior_nota - menor_nota
 
-contadorAprovados = 0
-contadorExcelentes = 0
+aprovados = [nota for nota in notas if nota >= 10]
+notas_16_ou_mais = [nota for nota in notas if nota >= 16]
 
-for nota in notas:
+percentagem_aprovados = len(aprovados) / len(notas) * 100
+percentagem_16_ou_mais = len(notas_16_ou_mais) / len(notas) * 100
 
-    if nota >= 10:
-        contadorAprovados += 1
-
-    if nota >= 16:
-        contadorExcelentes += 1
-
-percentagemAprovados = (contadorAprovados / len(notas)) * 100
-percentagemExcelentes = (contadorExcelentes / len(notas)) * 100
-
-print(f"Média: {media}")
+print(f"Media: {media:.2f}")
 print(f"Mediana: {mediana}")
-print(f"Maior Nota: {maiorNota}")
-print(f"Menor Nota: {menorNota}")
+print(f"Maior nota: {maior_nota}")
+print(f"Menor nota: {menor_nota}")
 print(f"Amplitude: {amplitude}")
-print(f"% de alunos aprovados: {percentagemAprovados}%")
-print(f"% de alunos excelentes: {percentagemExcelentes}%")
+print(f"Percentagem de alunos aprovados: {percentagem_aprovados:.2f}%")
+print(f"Percentagem de alunos com nota >= 16: {percentagem_16_ou_mais:.2f}%")
 
-print("____________________________________________")
-
-desvioPadrao = st.stdev(notas)
-print(f"Desvio Padrão: {desvioPadrao}")
-
-contadorNotasDispersas = 0
-
-for nota in notas:
-    if nota < media - desvioPadrao or nota > media + desvioPadrao:
-        contadorNotasDispersas += 1
-
-contadorNotasMuitoDispersas = 0
-
-for nota in notas:
-    if nota < media - (2*desvioPadrao) or nota > media + (2*desvioPadrao):
-        contadorNotasMuitoDispersas += 1
-
-print(f"Notas fora do desvio padrão: {contadorNotasDispersas}/{len(notas)}")
-print(f"Notas muito fora do desvio padrão: {contadorNotasMuitoDispersas}/{len(notas)}")
+print("\nInterpretacao:")
+print("A media e a mediana estao proximas, por isso a media representa bem o desempenho geral.")
+print("A diferenca entre a melhor e a pior nota e de 12 valores, mostrando alguma dispersao.")
+print("Como a maior parte das notas se concentra entre 10 e 16, a turma tem desempenho razoavelmente homogeneo.")
